@@ -4,7 +4,7 @@ import { useQuery, gql } from '@apollo/client';
 const GET_PUBLIC_REPOS = gql`
   query {
     viewer {
-      repositories(first: 10, isFork: false, privacy: PUBLIC) {
+      repositories(first: 20, privacy: PUBLIC) {
         nodes {
           id
           name
@@ -12,6 +12,7 @@ const GET_PUBLIC_REPOS = gql`
           owner {
             login
           }
+          url
         }
       }
     }
@@ -30,7 +31,8 @@ function RepositoryList() {
       <ul>
         {data.viewer.repositories.nodes.map(repo => (
           <li key={repo.id}>
-            <a href={`/repository/${repo.owner.login}/${repo.name}`}>{repo.name}</a>: {repo.description}
+            <strong>{repo.name}</strong> by {repo.owner.login} - 
+            <a href={repo.url} target="_blank" rel="noopener noreferrer">View Code</a>
           </li>
         ))}
       </ul>

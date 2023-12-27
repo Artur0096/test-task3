@@ -1,13 +1,15 @@
 import React from 'react';
-import {  Route, Routes } from 'react-router-dom';
+import { ApolloProvider } from '@apollo/client';
+import client from './apolloClient';
 import RepositoryList from './components/RepositoryList';
-//import RepositoryDetails from './components/RepositoryDetails';
 
 function App() {
   return (
-    <Routes>
-        <Route path="/" exact component={RepositoryList} />
-    </Routes>
+    <ApolloProvider client={client}>
+      <div className="App">
+        <RepositoryList />
+      </div>
+    </ApolloProvider>
   );
 }
 
