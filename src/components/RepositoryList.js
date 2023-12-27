@@ -1,41 +1,33 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 
-const GET_PUBLIC_REPOS = gql`
-  query {
-    viewer {
-      repositories(first: 10, isFork: false, privacy: PUBLIC) {
-        nodes {
-          id
-          name
-          description
-          owner {
-            login
-          }
+const GET_FILE_CONTENT = gql`
+  query GetFileContent($owner: String!, $name: String!, $expression: String!) {
+    repository(owner: $owner, name: $name) {
+      object(expression: $expression) {
+        ... on Blob {
+          text
         }
       }
     }
   }
 `;
 
-function RepositoryList() {
-  const { loading, error, data } = useQuery(GET_PUBLIC_REPOS);
+function CodeViewer({ owner, name, expression }) {
+  const { loading, error, data } = useQuery(GET_FILE_CONTENT, {
+    variables: { owner, name, expression },
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+  const content = data.repository.object.text;
+
   return (
-    <div>
-      <h1>Public Repositories</h1>
-      <ul>
-        {data.viewer.repositories.nodes.map(repo => (
-          <li key={repo.id}>
-            <a href={`/repository/${repo.owner.login}/${repo.name}`}>{repo.name}</a>: {repo.description}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <pre>
+      <code>{content}</code>
+    </pre>
   );
 }
 
-export default RepositoryList;
+export default CodeViewer;

@@ -1,13 +1,13 @@
 import React from 'react';
-import {  Route, Routes } from 'react-router-dom';
-import RepositoryList from './components/RepositoryList';
-//import RepositoryDetails from './components/RepositoryDetails';
+import './App.css';
+import CodeViewer from './CodeViewer';
 
 function App() {
   return (
-    <Routes>
-        <Route path="/" exact component={RepositoryList} />
-    </Routes>
+    <div className="App">
+      <h1>GitHub Code Viewer with GraphQL</h1>
+      <CodeViewer owner="OWNER_USERNAME" name="REPOSITORY_NAME" expression="BRANCH_NAME:PATH_TO_FILE" />
+    </div>
   );
 }
 
