@@ -1,0 +1,23 @@
+.input{
+    width: 250px;
+    height: 45px;
+    padding-left: 10px;
+    border: 1px solid gray;
+    border-radius: 15px;
+    margin-right: 15px;
+    background: aliceblue;
+}
+.input::placeholder{
+    color: white;
+}
+button{
+    background-color: white;
+    border-radius: 15px;
+    padding: 7px 25px;
+    cursor: pointer;
+
+}
+button:hover{
+    color: white;
+    background-color: black;
+}
